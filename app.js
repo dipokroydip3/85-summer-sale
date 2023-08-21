@@ -7,31 +7,48 @@ function handleClickCard(target){
       li.innerText = productName;
       selectedCards.appendChild(li);
       
+      
       const productPrice = target.childNodes[5].childNodes[3].innerText.split(' ')[0];
       const totalPrice = document.getElementById('total-price');
       totalPrice.innerText = productPrice;
 
       total = parseFloat(total) + parseFloat(totalPrice.innerText);
       totalPrice.innerText = total;
-      console.log(total);
       
 
-
       const couponBtn = document.getElementById('coupon-btn');
-      const couponField = document.getElementById('coupon-field');
-      if(total >= 200 || couponField.value == SELL200){
+      // const couponField = document.getElementById('coupon-field');
+      
+      if(total >= 200 ){
             couponBtn.disabled = false;
       }
       else{
-            true
+            true;
       }
-     
-
+      const purchaseBtn = document.getElementById('purchase-btn');
+      if(total > 0){
+           purchaseBtn.removeAttribute('disabled');
+      }
+      
+      
 }
 
                   // total price
 const coupon = document.getElementById('coupon-btn').addEventListener('click', function(){
-      const totalPrice = document.getElementById('total-price');
+      const couponField = document.getElementById('coupon-field');
+      if(couponField.value == ''){
+            alert ('Please enter the coupon code!!');
+            couponField.value ='';
+            
+      }
+      
+      if(couponField.value !== 'SELL200'){
+            alert ('It is not a valide coupon code');
+            couponField.value ='';
+            
+      }
+      else{
+            const totalPrice = document.getElementById('total-price');
       const totalInner = totalPrice.innerText;
       const totalStringToNumber = parseFloat(totalInner);
       const discount = totalStringToNumber * 0.20;
@@ -43,7 +60,10 @@ const coupon = document.getElementById('coupon-btn').addEventListener('click', f
       const total = document.getElementById('total');
       const discountTotal = totalStringToNumber - discountInt;
       total.innerText = discountTotal;
-      
+
+      couponField.value ='';
+      }
+    
 });
 
 
